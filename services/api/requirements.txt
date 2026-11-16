@@ -1,0 +1,21 @@
+
+fastapi==0.128.8
+uvicorn[standard]==0.39.0
+SQLAlchemy==2.0.57
+alembic==1.16.5
+pydantic==2.13.5
+psycopg[binary]==3.2.13
+python-dotenv==1.2.1
+
+# Testing
+pytest==8.4.2
+httpx==0.28.1
+
+# Data analysis and machine learning
+numpy==2.0.2
+pandas==2.3.3
+scikit-learn==1.6.1
+xgboost==2.1.4
+
+# Experiment tracking (future use)
+mlflow==3.1.4

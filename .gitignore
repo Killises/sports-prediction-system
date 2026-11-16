@@ -3,6 +3,13 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+.env
+.venv/
+*.py[cod]
+.pytest_cache/
+node_modules/
+.next/
+
 # C extensions
 *.so
 
@@ -218,3 +225,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS
+.DS_Store
+
+# Editor settings
+.vscode/
