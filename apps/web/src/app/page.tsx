@@ -1,59 +1,184 @@
+
 const sports = [
-  { name: "Football", description: "Match predictions and statistics", icon: "⚽", status: "Coming soon" },
-  { name: "Basketball", description: "Game predictions and analytics", icon: "🏀", status: "Coming soon" },
-  { name: "Tennis", description: "Player performance and predictions", icon: "🎾", status: "Coming soon" },
+  {
+    name: "Fútbol",
+    description: "Ligas, equipos, partidos y estadísticas",
+    icon: "⚽",
+    status: "En configuración",
+  },
+  {
+    name: "Baloncesto",
+    description: "Competiciones, equipos y estadísticas",
+    icon: "🏀",
+    status: "En configuración",
+  },
+  {
+    name: "Tenis",
+    description: "Torneos, jugadores y rendimiento",
+    icon: "🎾",
+    status: "En configuración",
+  },
+];
+
+const navigation = [
+  { name: "General", icon: "⌂", active: true },
+  { name: "Deportes", icon: "◈", active: false },
+  { name: "Competiciones", icon: "🏆", active: false },
+  { name: "Temporadas", icon: "▦", active: false },
+  { name: "Participantes", icon: "♙", active: false },
+  { name: "Partidos", icon: "⚽", active: false },
+  { name: "Estadísticas", icon: "▥", active: false },
 ];
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
-      <header className="border-b border-slate-800 px-8 py-5">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <h1 className="text-xl font-bold tracking-tight">
-            SPORTS<span className="text-blue-500">PREDICTION</span>
-          </h1>
-          <span className="text-sm text-slate-400">Development v0.1</span>
-        </div>
-      </header>
+    <main className="min-h-screen bg-[#080d18] text-slate-100">
+      <div className="flex min-h-screen">
+        <aside className="hidden w-64 shrink-0 border-r border-slate-800 bg-[#0c1423] p-6 lg:block">
+          <div className="mb-12">
+            <h1 className="text-xl font-bold tracking-tight">
+              SPORTS<span className="text-blue-500">PREDICTION</span>
+            </h1>
+            <p className="mt-2 text-xs text-slate-500">
+              Sports Intelligence Platform
+            </p>
+          </div>
 
-      <section className="mx-auto max-w-7xl px-8 py-16">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-blue-400">
-          Sports intelligence platform
-        </p>
+          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
+            Workspace
+          </p>
 
-        <h2 className="max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
-          Predict the game.
-          <br />
-          Understand the data.
-        </h2>
+          <nav className="space-y-2">
+            {navigation.map((item) => (
+              <a
+                key={item.name}
+                href={item.name === "General" ? "#" : `#${item.name.toLowerCase()}`}
+                className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition ${
+                  item.active
+                    ? "bg-blue-600/15 font-medium text-blue-400"
+                    : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                }`}
+              >
+                <span className="w-5 text-center">{item.icon}</span>
+                {item.name}
+              </a>
+            ))}
+          </nav>
 
-        <p className="mt-6 max-w-2xl text-lg text-slate-400">
-          A multi-sport analytics platform powered by data science
-          and machine learning.
-        </p>
+          <div className="mt-12 rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+            <p className="text-sm font-semibold">Development</p>
+            <p className="mt-1 text-xs text-slate-500">
+              Plataforma en construcción
+            </p>
+            <span className="mt-4 inline-flex rounded-full bg-emerald-500/10 px-3 py-1 text-xs text-emerald-400">
+              ● Sistema activo
+            </span>
+          </div>
+        </aside>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {sports.map((sport) => (
-            <article
-              key={sport.name}
-              className="rounded-xl border border-slate-800 bg-slate-900 p-6 transition hover:border-blue-500"
-            >
-              <div className="text-4xl">{sport.icon}</div>
-              <h3 className="mt-5 text-xl font-semibold">{sport.name}</h3>
-              <p className="mt-2 text-sm text-slate-400">
-                {sport.description}
-              </p>
-              <span className="mt-6 inline-block rounded-full bg-slate-800 px-3 py-1 text-xs text-blue-300">
-                {sport.status}
+        <div className="min-w-0 flex-1">
+          <header className="flex h-20 items-center justify-between border-b border-slate-800 px-6 lg:px-10">
+            <div>
+              <p className="text-sm text-slate-500">Workspace / General</p>
+              <h2 className="mt-1 text-lg font-semibold">Dashboard</h2>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span className="hidden text-sm text-slate-400 sm:block">
+                Sports Prediction System
               </span>
-            </article>
-          ))}
-        </div>
-      </section>
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/20 text-sm font-bold text-blue-400">
+                SP
+              </div>
+            </div>
+          </header>
 
-      <footer className="border-t border-slate-800 px-8 py-6 text-center text-sm text-slate-500">
-        Sports Prediction System · Personal project
-      </footer>
+          <section className="mx-auto max-w-7xl px-6 py-10 lg:px-10">
+            <div className="mb-10">
+              <p className="text-sm font-medium text-blue-400">
+                SPORTS INTELLIGENCE PLATFORM
+              </p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
+                Centro de control
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-400">
+                Administra los deportes, competiciones y datos que alimentan
+                el sistema de análisis y predicciones deportivas.
+              </p>
+            </div>
+
+            <div className="mb-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {[
+                { label: "Deportes", value: "03", detail: "Registrados" },
+                { label: "Competiciones", value: "01", detail: "Registradas" },
+                { label: "Participantes", value: "02", detail: "Registrados" },
+                { label: "Partidos", value: "01", detail: "Registrados" },
+              ].map((stat) => (
+                <article
+                  key={stat.label}
+                  className="rounded-xl border border-slate-800 bg-[#0c1423] p-5"
+                >
+                  <p className="text-sm text-slate-400">{stat.label}</p>
+                  <p className="mt-4 text-3xl font-bold">{stat.value}</p>
+                  <p className="mt-1 text-xs text-slate-500">{stat.detail}</p>
+                </article>
+              ))}
+            </div>
+
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold">Deportes</h3>
+                <p className="mt-1 text-sm text-slate-500">
+                  Deportes registrados en la plataforma
+                </p>
+              </div>
+              <span className="rounded-lg border border-slate-700 px-3 py-2 text-xs text-slate-400">
+                3 deportes
+              </span>
+            </div>
+
+            <div id="deportes" className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {sports.map((sport) => (
+                <article
+                  key={sport.name}
+                  className="rounded-xl border border-slate-800 bg-[#0c1423] p-6 transition hover:border-blue-500/50"
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="text-3xl">{sport.icon}</span>
+                    <span className="rounded-full bg-amber-500/10 px-3 py-1 text-xs text-amber-400">
+                      {sport.status}
+                    </span>
+                  </div>
+
+                  <h4 className="mt-6 text-lg font-semibold">{sport.name}</h4>
+                  <p className="mt-2 min-h-10 text-sm leading-5 text-slate-400">
+                    {sport.description}
+                  </p>
+
+                  <div className="mt-6 border-t border-slate-800 pt-4">
+                    <p className="text-xs text-slate-500">
+                      Gestión disponible próximamente
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-10 rounded-xl border border-slate-800 bg-[#0c1423] p-6">
+              <h3 className="font-semibold">Estado del proyecto</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-400">
+                La infraestructura inicial está configurada. El siguiente
+                objetivo es conectar este panel con la API para administrar
+                los datos directamente desde la interfaz.
+              </p>
+            </div>
+          </section>
+
+          <footer className="border-t border-slate-800 px-6 py-5 text-center text-xs text-slate-600">
+            Sports Prediction System · Development v0.2
+          </footer>
+        </div>
+      </div>
     </main>
   );
 }
