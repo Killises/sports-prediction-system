@@ -1,24 +1,52 @@
 
-const sports = [
-  {
+type Sport = {
+  id: number;
+  name: string;
+  slug: string;
+  description: string | null;
+  is_active: boolean;
+};
+
+const sportPresentation: Record<
+  string,
+  { name: string; description: string; icon: string }
+> = {
+  football: {
     name: "Fútbol",
     description: "Ligas, equipos, partidos y estadísticas",
     icon: "⚽",
-    status: "En configuración",
   },
-  {
+  basketball: {
     name: "Baloncesto",
     description: "Competiciones, equipos y estadísticas",
     icon: "🏀",
-    status: "En configuración",
   },
-  {
+  tennis: {
     name: "Tenis",
     description: "Torneos, jugadores y rendimiento",
     icon: "🎾",
-    status: "En configuración",
   },
-];
+};
+
+async function getSports(): Promise<Sport[]> {
+  const apiUrl = process.env.API_BASE_URL ?? "http://127.0.0.1:8000";
+
+  try {
+    const response = await fetch(`${apiUrl}/api/v1/sports/`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error al consultar los deportes:", error);
+    return [];
+  }
+}
+
 
 const navigation = [
   { name: "General", icon: "⌂", active: true },
@@ -30,7 +58,22 @@ const navigation = [
   { name: "Estadísticas", icon: "▥", active: false },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const sportsData = await getSports();
+
+  const sports = sportsData.map((sport) => {
+    const presentation = sportPresentation[sport.slug];
+
+    return {
+      name: presentation?.name ?? sport.name,
+      description:
+        presentation?.description ??
+        sport.description ??
+        "Deporte registrado en la plataforma",
+      icon: presentation?.icon ?? "🏅",
+      status: sport.is_active ? "Activo" : "Inactivo",
+    };
+  });
   return (
     <main className="min-h-screen bg-[#080d18] text-slate-100">
       <div className="flex min-h-screen">
@@ -109,7 +152,11 @@ export default function Home() {
 
             <div className="mb-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {[
-                { label: "Deportes", value: "03", detail: "Registrados" },
+                {
+                  label: "Deportes",
+                  value: String(sports.length).padStart(2, "0"),
+                  detail: "Registrados",
+                },
                 { label: "Competiciones", value: "01", detail: "Registradas" },
                 { label: "Participantes", value: "02", detail: "Registrados" },
                 { label: "Partidos", value: "01", detail: "Registrados" },
@@ -133,7 +180,7 @@ export default function Home() {
                 </p>
               </div>
               <span className="rounded-lg border border-slate-700 px-3 py-2 text-xs text-slate-400">
-                3 deportes
+                {sports.length} deportes
               </span>
             </div>
 
