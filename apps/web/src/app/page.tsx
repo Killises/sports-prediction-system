@@ -47,6 +47,50 @@ async function getSports(): Promise<Sport[]> {
   }
 }
 
+type DashboardCounts = {
+  competitions: number;
+  participants: number;
+  matches: number;
+};
+
+async function getDashboardCounts(): Promise<DashboardCounts> {
+  const apiUrl = process.env.API_BASE_URL ?? "http://127.0.0.1:8000";
+
+  try {
+    const [competitions, participants, matches] = await Promise.all([
+      fetch(`${apiUrl}/api/v1/competitions/`, { cache: "no-store" }),
+      fetch(`${apiUrl}/api/v1/participants/`, { cache: "no-store" }),
+      fetch(`${apiUrl}/api/v1/matches/`, { cache: "no-store" }),
+    ]);
+
+    if (!competitions.ok || !participants.ok || !matches.ok) {
+      throw new Error("No se pudieron consultar todos los indicadores");
+    }
+
+    const [competitionsData, participantsData, matchesData] =
+      await Promise.all([
+        competitions.json(),
+        participants.json(),
+        matches.json(),
+      ]);
+
+    return {
+      competitions: competitionsData.length,
+      participants: participantsData.length,
+      matches: matchesData.length,
+    };
+  } catch (error) {
+    console.error("Error al consultar los indicadores:", error);
+
+    return {
+      competitions: 0,
+      participants: 0,
+      matches: 0,
+    };
+  }
+}
+
+
 
 const navigation = [
   { name: "General", icon: "⌂", active: true },
@@ -60,6 +104,7 @@ const navigation = [
 
 export default async function Home() {
   const sportsData = await getSports();
+    const dashboardCounts = await getDashboardCounts();
 
   const sports = sportsData.map((sport) => {
     const presentation = sportPresentation[sport.slug];
@@ -157,9 +202,21 @@ export default async function Home() {
                   value: String(sports.length).padStart(2, "0"),
                   detail: "Registrados",
                 },
-                { label: "Competiciones", value: "01", detail: "Registradas" },
-                { label: "Participantes", value: "02", detail: "Registrados" },
-                { label: "Partidos", value: "01", detail: "Registrados" },
+                {
+                  label: "Competiciones",
+                  value: String(dashboardCounts.competitions).padStart(2, "0"),
+                  detail: "Registradas",
+                },
+                {
+                  label: "Participantes",
+                  value: String(dashboardCounts.participants).padStart(2, "0"),
+                  detail: "Registrados",
+                },
+                {
+                  label: "Partidos",
+                  value: String(dashboardCounts.matches).padStart(2, "0"),
+                  detail: "Registrados",
+                },
               ].map((stat) => (
                 <article
                   key={stat.label}
