@@ -140,7 +140,13 @@ export default async function Home() {
             {navigation.map((item) => (
               <a
                 key={item.name}
-                href={item.name === "General" ? "#" : `#${item.name.toLowerCase()}`}
+                href={
+                  item.name === "General"
+                    ? "/"
+                    : item.name === "Deportes"
+                      ? "/sports"
+                      : `#${item.name.toLowerCase()}`
+                }
                 className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition ${
                   item.active
                     ? "bg-blue-600/15 font-medium text-blue-400"
