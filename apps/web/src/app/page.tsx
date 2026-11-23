@@ -1,4 +1,4 @@
-
+export const dynamic = "force-dynamic";
 type Sport = {
   id: number;
   name: string;
@@ -141,12 +141,14 @@ export default async function Home() {
               <a
                 key={item.name}
                 href={
-                  item.name === "General"
-                    ? "/"
-                    : item.name === "Deportes"
-                      ? "/sports"
-                      : `#${item.name.toLowerCase()}`
-                }
+  item.name === "General"
+    ? "/"
+    : item.name === "Deportes"
+      ? "/sports"
+      : item.name === "Competiciones"
+        ? "/competitions"
+        : `#${item.name.toLowerCase()}`
+}
                 className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition ${
                   item.active
                     ? "bg-blue-600/15 font-medium text-blue-400"
