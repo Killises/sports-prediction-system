@@ -1,5 +1,6 @@
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from app.api.v1.endpoints import (
@@ -14,6 +15,16 @@ from app.api.v1.endpoints import (
 from app.db.session import engine
 
 app = FastAPI(title="Sports Prediction System API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(
     sports.router,
