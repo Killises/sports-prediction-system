@@ -147,7 +147,9 @@ export default async function Home() {
       ? "/sports"
       : item.name === "Competiciones"
         ? "/competitions"
-        : `#${item.name.toLowerCase()}`
+        : item.name === "Temporadas"
+          ? "/seasons"
+          : `#${item.name.toLowerCase()}`
 }
                 className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition ${
                   item.active
